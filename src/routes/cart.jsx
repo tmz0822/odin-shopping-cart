@@ -3,8 +3,7 @@ import CartItem from '../components/CartItem';
 
 export default function Cart() {
   const { items } = useOutletContext();
-  console.log(items);
-  console.log(items.length);
+
   return (
     <>
       <h1>Cart</h1>

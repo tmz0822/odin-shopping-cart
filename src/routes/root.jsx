@@ -23,7 +23,7 @@ export default function Root() {
 
   return (
     <>
-      <Navbar />
+      <Navbar quantity={items.length} />
       <Outlet context={{ items, handleAddItemToCart }} />
     </>
   );
