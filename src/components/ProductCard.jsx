@@ -1,7 +1,12 @@
 import { useState } from 'react';
 
-export default function ProductCard({ product }) {
+export default function ProductCard({ product, handleAddItemToCart }) {
   const [quantity, setQuantity] = useState(0);
+
+  function addToCart() {
+    const item = { ...product, quantity };
+    handleAddItemToCart(item);
+  }
 
   return (
     <div>
@@ -13,6 +18,7 @@ export default function ProductCard({ product }) {
         placeholder="Quantity"
         value={quantity}
         onChange={(event) => setQuantity(event.target.value)}
+        min="0"
       />
       <button type="button" onClick={() => setQuantity(quantity + 1)}>
         +
@@ -21,7 +27,9 @@ export default function ProductCard({ product }) {
         -
       </button>
 
-      <button type="button">Add To Cart</button>
+      <button type="button" onClick={addToCart}>
+        Add To Cart
+      </button>
     </div>
   );
 }
