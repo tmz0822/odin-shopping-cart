@@ -1,9 +1,12 @@
 import { Link, useOutletContext } from 'react-router-dom';
 import CartItem from '../components/CartItem';
 import styled from 'styled-components';
+import CheckoutItem from '../components/CheckoutItem';
 
 export default function Cart() {
   const { items } = useOutletContext();
+
+  const totalPrice = items.reduce((acc, curr) => acc + curr.price, 0);
 
   const handleItemUpdate = () => {};
 
@@ -40,7 +43,14 @@ export default function Cart() {
             items.map((item) => <CartItem key={item.id} item={item} />)}
         </CartOverview>
         <Checkout>
-          <h2>Checkout now</h2>
+          <CheckoutTitle>Checkout now</CheckoutTitle>
+          {items.length > 0 &&
+            items.map((item) => <CheckoutItem key={item.id} item={item} />)}
+          <CheckoutPrice>
+            <TotalPrice>Total Price:</TotalPrice>
+            <div>${totalPrice}</div>
+          </CheckoutPrice>
+          <CheckoutButton>Place order</CheckoutButton>
         </Checkout>
       </Wrapper>
     </>
@@ -84,12 +94,37 @@ const EmptyCart = styled.div`
 
 const Checkout = styled.section`
   flex: 1;
+
   border: 1px solid #e0e0e0;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 
   max-height: 800px;
+  height: max-content;
+  padding: 1rem;
 
   position: sticky;
   top: 50px;
+  overflow-y: auto;
 `;
+
+const CheckoutTitle = styled.h2`
+  text-align: center;
+  margin: 0 0 8px;
+`;
+
+const CheckoutPrice = styled.div`
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  font-size: 1.3rem;
+  margin-bottom: 8px;
+`;
+
+const TotalPrice = styled.div`
+  flex: 1;
+  text-align: right;
+  font-weight: 700;
+`;
+
+const CheckoutButton = styled.button``;
