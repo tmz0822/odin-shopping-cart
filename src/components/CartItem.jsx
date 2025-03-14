@@ -1,6 +1,15 @@
+import { useState } from 'react';
 import styled from 'styled-components';
 
-export default function CartItem({ item }) {
+export default function CartItem({ item, handleUpdateCartItem }) {
+  const [quantity, setQuantity] = useState(item.quantity);
+
+  function updateCartItem(newQuantity) {
+    console.log('updating cart item');
+    setQuantity(newQuantity);
+    handleUpdateCartItem(item.id, newQuantity);
+  }
+
   return (
     <Item>
       <ImageContainer>
@@ -13,7 +22,7 @@ export default function CartItem({ item }) {
         <BottomDetails>
           <Price>${item.price}</Price>
           <div style={{ display: 'flex', border: '1px solid #e0e0e0' }}>
-            <Button type="button">
+            <Button type="button" onClick={() => updateCartItem(quantity - 1)}>
               <svg
                 width="50"
                 height="50"
@@ -30,8 +39,14 @@ export default function CartItem({ item }) {
                 />
               </svg>
             </Button>
-            <Input defaultValue={item.quantity} />
-            <Button type="button">
+            <Input
+              type="number"
+              value={quantity}
+              min={0}
+              max={99}
+              onChange={(e) => updateCartItem(e.target.value)}
+            />
+            <Button type="button" onClick={() => updateCartItem(quantity + 1)}>
               <svg
                 width="50"
                 height="50"
@@ -70,9 +85,12 @@ const Item = styled.div`
 `;
 const ImageContainer = styled.div`
   max-width: 120px;
+
   flex: 1;
 `;
-const Image = styled.img``;
+const Image = styled.img`
+  min-width: 50px;
+`;
 const Details = styled.div`
   display: flex;
   flex-direction: column;

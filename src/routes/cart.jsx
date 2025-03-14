@@ -4,11 +4,14 @@ import styled from 'styled-components';
 import CheckoutItem from '../components/CheckoutItem';
 
 export default function Cart() {
-  const { items } = useOutletContext();
+  const { items, handleUpdateCartItem, handlePlaceOrder } = useOutletContext();
 
-  const totalPrice = items.reduce((acc, curr) => acc + curr.price, 0);
+  console.log('Cart rerender');
 
-  const handleItemUpdate = () => {};
+  const totalPrice = items.reduce(
+    (acc, curr) => acc + curr.price * curr.quantity,
+    0
+  );
 
   return (
     <>
@@ -40,17 +43,23 @@ export default function Cart() {
             </EmptyCart>
           )}
           {items.length > 0 &&
-            items.map((item) => <CartItem key={item.id} item={item} />)}
+            items.map((item) => (
+              <CartItem
+                key={item.id}
+                item={item}
+                handleUpdateCartItem={handleUpdateCartItem}
+              />
+            ))}
         </CartOverview>
         <Checkout>
-          <CheckoutTitle>Checkout now</CheckoutTitle>
+          <CheckoutTitle>Checkout</CheckoutTitle>
           {items.length > 0 &&
             items.map((item) => <CheckoutItem key={item.id} item={item} />)}
           <CheckoutPrice>
             <TotalPrice>Total Price:</TotalPrice>
-            <div>${totalPrice}</div>
+            <div>${totalPrice.toFixed(2)}</div>
           </CheckoutPrice>
-          <CheckoutButton>Place order</CheckoutButton>
+          <CheckoutButton type="button">Place order</CheckoutButton>
         </Checkout>
       </Wrapper>
     </>
@@ -72,6 +81,10 @@ const Wrapper = styled.div`
 
   display: flex;
   gap: 20px;
+
+  @media (max-width: 600px) {
+    flex-direction: column;
+  }
 `;
 
 const CartOverview = styled.section`
@@ -106,11 +119,14 @@ const Checkout = styled.section`
   position: sticky;
   top: 50px;
   overflow-y: auto;
+
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 `;
 
 const CheckoutTitle = styled.h2`
   text-align: center;
-  margin: 0 0 8px;
 `;
 
 const CheckoutPrice = styled.div`
@@ -118,7 +134,6 @@ const CheckoutPrice = styled.div`
   justify-content: space-between;
   gap: 1rem;
   font-size: 1.3rem;
-  margin-bottom: 8px;
 `;
 
 const TotalPrice = styled.div`
@@ -127,4 +142,20 @@ const TotalPrice = styled.div`
   font-weight: 700;
 `;
 
-const CheckoutButton = styled.button``;
+const CheckoutButton = styled.button`
+  align-self: end;
+  cursor: pointer;
+
+  background-color: #007bff;
+  color: #fff;
+  outline: none;
+  border-radius: 5px;
+  border: none;
+  padding: 10px;
+  font-size: 1rem;
+  transition: background-color 0.2s;
+
+  &:hover {
+    background-color: #0056b3;
+  }
+`;

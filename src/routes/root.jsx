@@ -182,11 +182,43 @@ export default function Root() {
     }
   }
 
+  function handleUpdateCartItem(id, newQuantity) {
+    const quantity = Number(newQuantity);
+    if (Number(quantity) === 0) {
+      // Remove item from cart
+      const newItems = items.filter((item) => item.id !== id);
+      setItems(newItems);
+    } else {
+      const updatedItems = items.map((item) => {
+        if (item.id === id) {
+          return { ...item, quantity };
+        } else {
+          return item;
+        }
+      });
+      setItems(updatedItems);
+    }
+  }
+
+  function handlePlaceOrder() {
+    // Handle place order logics..
+
+    // Clear items
+    setItems([]);
+  }
+
   return (
     <Wrapper>
       <Navbar quantity={items.length} />
 
-      <Outlet context={{ items, handleAddItemToCart }} />
+      <Outlet
+        context={{
+          items,
+          handleAddItemToCart,
+          handleUpdateCartItem,
+          handlePlaceOrder,
+        }}
+      />
     </Wrapper>
   );
 }

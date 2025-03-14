@@ -5,7 +5,7 @@ export default function CheckoutItem({ item }) {
     <Item>
       <Quantity>{item.quantity}x</Quantity>
       <Title>{item.title}</Title>
-      <Price>${item.quantity * item.price}</Price>
+      <Price>${(item.quantity * item.price).toFixed(2)}</Price>
     </Item>
   );
 }
