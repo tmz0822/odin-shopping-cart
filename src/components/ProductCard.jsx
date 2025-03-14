@@ -1,6 +1,48 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 
+export default function ProductCard({ product, handleAddItemToCart }) {
+  const [quantity, setQuantity] = useState(1);
+
+  function addToCart() {
+    const item = { ...product, quantity };
+    handleAddItemToCart(item);
+
+    setQuantity(0);
+  }
+
+  return (
+    <Card>
+      <Image src={product.image} alt={product.title} />
+
+      <Content>
+        <Title>{product.title}</Title>
+
+        <InputWrapper>
+          <input
+            type="number"
+            name="quantity"
+            placeholder="Quantity"
+            value={quantity}
+            onChange={(event) => setQuantity(event.target.value)}
+            min="0"
+          />
+          <Button type="button" onClick={() => setQuantity(quantity + 1)}>
+            +
+          </Button>
+          <Button type="button" onClick={() => setQuantity(quantity - 1)}>
+            -
+          </Button>
+        </InputWrapper>
+
+        <Button type="button" onClick={addToCart}>
+          Add To Cart
+        </Button>
+      </Content>
+    </Card>
+  );
+}
+
 const Card = styled.div`
   max-width: 300px;
   border: 1px solid #e0e0e0;
@@ -57,45 +99,3 @@ const Button = styled.button`
     background-color: #0056b3;
   }
 `;
-
-export default function ProductCard({ product, handleAddItemToCart }) {
-  const [quantity, setQuantity] = useState(0);
-
-  function addToCart() {
-    const item = { ...product, quantity };
-    handleAddItemToCart(item);
-
-    setQuantity(0);
-  }
-
-  return (
-    <Card>
-      <Image src={product.image} alt={product.title} />
-
-      <Content>
-        <Title>{product.title}</Title>
-
-        <InputWrapper>
-          <input
-            type="number"
-            name="quantity"
-            placeholder="Quantity"
-            value={quantity}
-            onChange={(event) => setQuantity(event.target.value)}
-            min="0"
-          />
-          <Button type="button" onClick={() => setQuantity(quantity + 1)}>
-            +
-          </Button>
-          <Button type="button" onClick={() => setQuantity(quantity - 1)}>
-            -
-          </Button>
-        </InputWrapper>
-
-        <Button type="button" onClick={addToCart}>
-          Add To Cart
-        </Button>
-      </Content>
-    </Card>
-  );
-}

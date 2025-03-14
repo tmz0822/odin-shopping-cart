@@ -3,7 +3,9 @@ import styled from 'styled-components';
 export default function CartItem({ item }) {
   return (
     <Item>
-      <Image src={item.image} alt={item.title} />
+      <ImageContainer>
+        <Image src={item.image} alt={item.title} />
+      </ImageContainer>
       <Details>
         <Title>{item.title}</Title>
         <Description>{item.description}</Description>
@@ -24,11 +26,11 @@ export default function CartItem({ item }) {
                   x2="35"
                   y2="25"
                   stroke="lightgrey"
-                  stroke-width="3"
+                  strokeWidth="3"
                 />
               </svg>
             </Button>
-            <Input value={item.quantity} />
+            <Input defaultValue={item.quantity} />
             <Button type="button">
               <svg
                 width="50"
@@ -42,7 +44,7 @@ export default function CartItem({ item }) {
                   x2="35"
                   y2="25"
                   stroke="lightgrey"
-                  stroke-width="3"
+                  strokeWidth="3"
                 />
                 <line
                   x1="25"
@@ -50,7 +52,7 @@ export default function CartItem({ item }) {
                   x2="25"
                   y2="35"
                   stroke="lightgrey"
-                  stroke-width="3"
+                  strokeWidth="3"
                 />
               </svg>
             </Button>
@@ -66,14 +68,17 @@ const Item = styled.div`
   gap: 20px;
   padding: 16px;
 `;
-const Image = styled.img`
-  height: 200px;
+const ImageContainer = styled.div`
+  max-width: 120px;
+  flex: 1;
 `;
+const Image = styled.img``;
 const Details = styled.div`
   display: flex;
   flex-direction: column;
   gap: 10px;
   justify-content: space-evenly;
+  flex: 1;
 `;
 const Title = styled.h2`
   font-size: 1.25rem;
