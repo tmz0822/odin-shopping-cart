@@ -1,6 +1,15 @@
 import { getProducts } from '../products';
 import { useLoaderData, useOutletContext } from 'react-router-dom';
 import ProductCard from '../components/ProductCard';
+import styled from 'styled-components';
+
+const Wrapper = styled.div`
+  display: flex;
+  gap: 20px;
+  padding: 20px;
+  flex-wrap: wrap;
+  justify-content: center;
+`;
 
 export async function loader() {
   const products = await getProducts();
@@ -12,9 +21,7 @@ export default function Shop() {
   const { handleAddItemToCart } = useOutletContext();
 
   return (
-    <>
-      <h1>Shop</h1>
-      {/* TODO: Fetch data from API */}
+    <Wrapper>
       {products.length > 0 &&
         products.map((product) => (
           <ProductCard
@@ -23,6 +30,6 @@ export default function Shop() {
             handleAddItemToCart={handleAddItemToCart}
           />
         ))}
-    </>
+    </Wrapper>
   );
 }

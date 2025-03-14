@@ -1,9 +1,116 @@
+import styled from 'styled-components';
+
 export default function CartItem({ item }) {
-  console.log(item);
   return (
-    <div>
-      <div>{item.title}</div>
-      <div>{item.quantity}</div>
-    </div>
+    <Item>
+      <Image src={item.image} alt={item.title} />
+      <Details>
+        <Title>{item.title}</Title>
+        <Description>{item.description}</Description>
+
+        <BottomDetails>
+          <Price>${item.price}</Price>
+          <div style={{ display: 'flex', border: '1px solid #e0e0e0' }}>
+            <Button type="button">
+              <svg
+                width="50"
+                height="50"
+                viewBox="0 0 50 50"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <line
+                  x1="15"
+                  y1="25"
+                  x2="35"
+                  y2="25"
+                  stroke="lightgrey"
+                  stroke-width="3"
+                />
+              </svg>
+            </Button>
+            <Input value={item.quantity} />
+            <Button type="button">
+              <svg
+                width="50"
+                height="50"
+                viewBox="0 0 50 50"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <line
+                  x1="15"
+                  y1="25"
+                  x2="35"
+                  y2="25"
+                  stroke="lightgrey"
+                  stroke-width="3"
+                />
+                <line
+                  x1="25"
+                  y1="15"
+                  x2="25"
+                  y2="35"
+                  stroke="lightgrey"
+                  stroke-width="3"
+                />
+              </svg>
+            </Button>
+          </div>
+        </BottomDetails>
+      </Details>
+    </Item>
   );
 }
+
+const Item = styled.div`
+  display: flex;
+  gap: 20px;
+  padding: 16px;
+`;
+const Image = styled.img`
+  height: 200px;
+`;
+const Details = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  justify-content: space-evenly;
+`;
+const Title = styled.h2`
+  font-size: 1.25rem;
+`;
+const Description = styled.div`
+  font-size: 1.15rem;
+`;
+
+const BottomDetails = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+const Price = styled.div`
+  font-size: 1.1rem;
+`;
+const Button = styled.button`
+  width: 30px;
+  height: 30px;
+  border: none;
+  background-color: #fff;
+  cursor: pointer;
+  font-size: 1.2rem;
+
+  > svg {
+    max-width: 100%;
+    height: 100%;
+  }
+`;
+const Input = styled.input`
+  width: 50px;
+  text-align: center;
+  border: none;
+  border-left: 1px solid #e0e0e0;
+  border-right: 1px solid #e0e0e0;
+  outline: none;
+
+  &:focus {
+  }
+`;
