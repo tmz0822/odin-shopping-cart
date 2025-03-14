@@ -1,6 +1,6 @@
 import { Outlet } from 'react-router-dom';
 import Navbar from '../components/Navbar';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
 
 export default function Root() {
@@ -201,7 +201,7 @@ export default function Root() {
   }
 
   function handlePlaceOrder() {
-    // Handle place order logics..
+    // place order logics..
 
     // Clear items
     setItems([]);

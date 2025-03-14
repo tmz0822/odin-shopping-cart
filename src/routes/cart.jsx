@@ -6,8 +6,6 @@ import CheckoutItem from '../components/CheckoutItem';
 export default function Cart() {
   const { items, handleUpdateCartItem, handlePlaceOrder } = useOutletContext();
 
-  console.log('Cart rerender');
-
   const totalPrice = items.reduce(
     (acc, curr) => acc + curr.price * curr.quantity,
     0
@@ -51,16 +49,21 @@ export default function Cart() {
               />
             ))}
         </CartOverview>
-        <Checkout>
-          <CheckoutTitle>Checkout</CheckoutTitle>
-          {items.length > 0 &&
-            items.map((item) => <CheckoutItem key={item.id} item={item} />)}
-          <CheckoutPrice>
-            <TotalPrice>Total Price:</TotalPrice>
-            <div>${totalPrice.toFixed(2)}</div>
-          </CheckoutPrice>
-          <CheckoutButton type="button">Place order</CheckoutButton>
-        </Checkout>
+
+        {items.length > 0 && (
+          <Checkout>
+            <CheckoutTitle>Checkout</CheckoutTitle>
+            {items.length > 0 &&
+              items.map((item) => <CheckoutItem key={item.id} item={item} />)}
+            <CheckoutPrice>
+              <TotalPrice>Total Price:</TotalPrice>
+              <div>${totalPrice.toFixed(2)}</div>
+            </CheckoutPrice>
+            <CheckoutButton type="button" onClick={handlePlaceOrder}>
+              Place order
+            </CheckoutButton>
+          </Checkout>
+        )}
       </Wrapper>
     </>
   );
