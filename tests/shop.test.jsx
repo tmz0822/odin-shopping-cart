@@ -18,12 +18,12 @@ vi.mock('react-router-dom', async (importOriginal) => {
 });
 
 describe('Shop component', () => {
-  it.skip('renders shop item from loader data', () => {
-    useLoaderData.mockReturnValue([
+  it('renders shop item from loader data', () => {
+    const products = [
       { id: 1, title: 'T-Shirt' },
       { id: 2, title: 'Jeans' },
-    ]);
-
+    ];
+    useLoaderData.mockReturnValue({ products });
     useOutletContext.mockReturnValue({
       handleAddItemToCart: vi.fn(),
     });
@@ -33,7 +33,7 @@ describe('Shop component', () => {
         <Shop />
       </MemoryRouter>
     );
-
-    expect(11).toEqual(11);
+    expect(screen.getByText('T-Shirt'));
+    expect(screen.getByText('Jeans'));
   });
 });

@@ -24,7 +24,7 @@ export default function ProductCard({ product, handleAddItemToCart }) {
             name="quantity"
             placeholder="Quantity"
             value={quantity}
-            onChange={(event) => setQuantity(event.target.value)}
+            onChange={(event) => setQuantity(Number(event.target.value))}
             min="0"
           />
           <Button type="button" onClick={() => setQuantity(quantity + 1)}>

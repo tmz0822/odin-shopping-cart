@@ -1,10 +1,10 @@
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import ProductCard from '../src/components/ProductCard';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 describe('ProductCard component', () => {
-  it('Renders product', () => {
+  it('renders product correctly', () => {
     const product = {
       id: 1,
       title: 'T-Shirt',
@@ -15,7 +15,7 @@ describe('ProductCard component', () => {
     expect(screen.getByText('T-Shirt'));
   });
 
-  it('Product quantity can be adjusted', async () => {
+  it('can adjust product quantity', async () => {
     const product = {
       id: 1,
       title: 'T-Shirt',
@@ -33,5 +33,35 @@ describe('ProductCard component', () => {
     expect(quantityInput.value).toEqual('2');
     await user.click(decrementButton);
     expect(quantityInput.value).toEqual('1');
+  });
+
+  // TODO: product can be added into cart.
+  it('calls handleAddItemToCart when Add To Cart button is clicked', async () => {
+    const mockHandleAddItemToCart = vi.fn();
+    const product = {
+      id: 1,
+      title: 'Test Product',
+      price: 99.99,
+      image: 'https://example.com/product.jpg',
+    };
+
+    const user = userEvent.setup();
+    render(
+      <ProductCard
+        product={product}
+        handleAddItemToCart={mockHandleAddItemToCart}
+      />
+    );
+
+    const addToCartButton = screen.getByRole('button', {
+      name: /add to cart/i,
+    });
+    await user.click(addToCartButton);
+
+    expect(mockHandleAddItemToCart).toHaveBeenCalledTimes(1);
+    expect(mockHandleAddItemToCart).toHaveBeenCalledWith({
+      ...product,
+      quantity: 1,
+    });
   });
 });
