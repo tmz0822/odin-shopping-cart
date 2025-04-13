@@ -8,7 +8,7 @@ export default function ProductCard({ product, handleAddItemToCart }) {
     const item = { ...product, quantity };
     handleAddItemToCart(item);
 
-    setQuantity(0);
+    setQuantity(1);
   }
 
   return (
@@ -30,7 +30,10 @@ export default function ProductCard({ product, handleAddItemToCart }) {
           <Button type="button" onClick={() => setQuantity(quantity + 1)}>
             +
           </Button>
-          <Button type="button" onClick={() => setQuantity(quantity - 1)}>
+          <Button
+            type="button"
+            onClick={() => setQuantity(quantity === 1 ? 1 : quantity - 1)}
+          >
             -
           </Button>
         </InputWrapper>
